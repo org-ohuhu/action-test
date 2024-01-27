@@ -9,8 +9,8 @@ jobs:
     steps:
       - name: Clear any existing tool cache
         run: |
-          mv "{% raw %}${{ runner.tool_cache }}" "${{ runner.tool_cache }}.old"{% endraw %}
-          mkdir -p "{% raw %}${{ runner.tool_cache }}{% endraw %}"
+          mv "${{ runner.tool_cache }}" "${{ runner.tool_cache }}.old"
+          mkdir -p "${{ runner.tool_cache }}"
 
       - uses: actions/checkout@v3
       - name: Set up Go
@@ -20,8 +20,13 @@ jobs:
 
       - name: Archive tool cache
         run: |
-          cd "{% raw %}${{ runner.tool_cache }}{% endraw %}"
+          cd "${{ runner.tool_cache }}"
           tar -czf tool_cache.tar.gz *
+
+      - name: Upload tool cache artifact
+        uses: actions/upload-artifact@v2
+        with:
+          path: ${{runner.tool_cache}}/tool_cache.tar.gz
 
       # - run: git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
       # - name: Login to Aliyun Container Registry (ACR)
