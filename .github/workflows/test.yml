@@ -15,7 +15,7 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
-          go-version: 1.21
+          go-version: 1.21.6
       - run: git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
       - name: Login to Aliyun Container Registry (ACR)
         uses: aliyun/acr-login@v1
