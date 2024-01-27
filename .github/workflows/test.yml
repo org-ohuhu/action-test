@@ -4,45 +4,28 @@ on:
 
 jobs:
   GoBuild:
-    # runs-on: arc-runner-set
-    runs-on: ubuntu-latest
+    runs-on: arc-runner-set
     steps:
-      - name: Clear any existing tool cache
-        run: |
-          mv "${{ runner.tool_cache }}" "${{ runner.tool_cache }}.old"
-          mkdir -p "${{ runner.tool_cache }}"
-
       - uses: actions/checkout@v3
       - name: Set up Go
         uses: actions/setup-go@v3
         with:
           go-version: 1.21.6
-
-      - name: Archive tool cache
-        run: |
-          cd "${{ runner.tool_cache }}"
-          tar -czf tool_cache.tar.gz *
-
-      - name: Upload tool cache artifact
-        uses: actions/upload-artifact@v2
+      - run: git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
+      - name: Login to Aliyun Container Registry (ACR)
+        uses: aliyun/acr-login@v1
         with:
-          path: ${{runner.tool_cache}}/tool_cache.tar.gz
-
-      # - run: git config --global url.https://$GH_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
-      # - name: Login to Aliyun Container Registry (ACR)
-      #   uses: aliyun/acr-login@v1
-      #   with:
-      #     login-server: univer-acr-registry.cn-shenzhen.cr.aliyuncs.com
-      #     region-id: cn-shenzhen
-      #     username: "${{ secrets.REGISTRY_USERNAME }}"
-      #     password: "${{ secrets.REGISTRY_PASSWORD }}"
-      # - name: Set up QEMU
-      #   uses: docker/setup-qemu-action@v3
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v3
-      # - name: Build and Push Docker Image
-      #   run: |
-      #     IMAGE_TAG=$(echo "${{ github.sha }}" | cut -c 1-7)
-      #     make push_image PUSH_TAG=$IMAGE_TAG
+          login-server: univer-acr-registry.cn-shenzhen.cr.aliyuncs.com
+          region-id: cn-shenzhen
+          username: "${{ secrets.REGISTRY_USERNAME }}"
+          password: "${{ secrets.REGISTRY_PASSWORD }}"
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and Push Docker Image
+        run: |
+          IMAGE_TAG=$(echo "${{ github.sha }}" | cut -c 1-7)
+          make push_image PUSH_TAG=$IMAGE_TAG
 
   
