@@ -44,7 +44,7 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Set up kubectl
-        uses: actions-hub/kubectl@v1.30.9
+        uses: actions-hub/kubectl@v1.30.0
 
       - name: Archive tool cache
         run: |
