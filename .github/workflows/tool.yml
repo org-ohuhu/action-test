@@ -46,7 +46,7 @@ jobs:
       - name: Set up kubectl
         uses: azure/setup-kubectl@v4
         with:
-          version: v4.0.0
+          version: v1.29.2
 
       - name: Archive tool cache
         run: |
