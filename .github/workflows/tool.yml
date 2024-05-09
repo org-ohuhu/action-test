@@ -43,6 +43,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
+      - name: Set up kubectl
+        uses: actions-hub/kubectl@v1.30.9
+
       - name: Archive tool cache
         run: |
           cd "${{ runner.tool_cache }}"
