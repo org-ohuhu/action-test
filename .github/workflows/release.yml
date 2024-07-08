@@ -1,0 +1,16 @@
+name: 🎉 Push Release
+
+on:
+  push:
+    tags:
+    - 'v*'
+
+jobs:
+  build-docker-image:
+    name: BuildDockerImage
+    runs-on: ubuntu-latest
+    steps:
+    - name: Build and Push Docker Image
+      run: |
+        IMAGE_TAG=${GITHUB_REF/refs\/tags\/v/}
+        echo "$IMAGE_TAG"
