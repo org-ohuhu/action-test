@@ -23,6 +23,6 @@ jobs:
             -d '{
               "msgtype": "markdown",
               "markdown": {
-                "content": "⚠️ K8s staging deploy failed, please check the logs.\n\n[Job Log]: https://github.com/dream-num/helm-chart-private/actions/runs/${{ github.run_id }}\n\n[Service]: ${{ github.event.client_payload.service }}"
+                "content": "⚠️ K8s staging deploy failed, please check the logs.<br/><br/>Job Log: [https://github.com/dream-num/helm-chart-private/actions/runs/${{ github.run_id }}](https://github.com/dream-num/helm-chart-private/actions/runs/${{ github.run_id }})<br/><br />Service: test"
               }
             }'
