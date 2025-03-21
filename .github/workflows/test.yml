@@ -14,7 +14,8 @@ jobs:
 
       - name: update dns resolver
         run: |
-          sudo sed -i '1i nameserver ${{ secrets.CUSTOM_DNS }}' /etc/resolv.conf
+          sudo sed -i '1i nameserver ${{ secrets.CUSTOM_DNS }}' /etc/resolv.conf 2>&1
+          return 0
 
       - name: dig domain
         run: |
