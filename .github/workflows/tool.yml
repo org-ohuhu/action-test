@@ -18,10 +18,11 @@ jobs:
         with:
           go-version: 1.21.6
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Setup pnpm and Node.js
+        uses: pnpm/setup@v2
         with:
-          node-version: 20.18.3
+            runtime: node@24
+            install: false
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
